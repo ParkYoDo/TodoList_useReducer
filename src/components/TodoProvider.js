@@ -73,8 +73,8 @@ const initialState = {
 
 function todoReducer(state, action) {
   switch (action.type) {
-    case '11':
-      return state;
+    case 'ISLOGIN_FALSE':
+      return { ...state, isLogin: false };
     default:
       return state;
   }
@@ -94,9 +94,9 @@ export function TodoProvider({ children }) {
     <TodoStateContext.Provider value={state}>
       <TodoDispatchContext.Provider value={dispatch}>
         <TodoNextUserIdContext.Provider value={nextUserId}>
-          <TodoNextTodoIdContext value={nextTodoId}>
+          <TodoNextTodoIdContext.Provider value={nextTodoId}>
             {children}
-          </TodoNextTodoIdContext>
+          </TodoNextTodoIdContext.Provider>
         </TodoNextUserIdContext.Provider>
       </TodoDispatchContext.Provider>
     </TodoStateContext.Provider>
@@ -108,6 +108,7 @@ export function useTodoState() {
   if (!context) {
     throw new Error('Cannot find TodoProvider');
   }
+  return context;
 }
 
 export function useTodoDispatch() {
@@ -115,6 +116,7 @@ export function useTodoDispatch() {
   if (!context) {
     throw new Error('Cannot find TodoProvider');
   }
+  return context;
 }
 
 export function useTodoNextUserId() {
@@ -122,6 +124,7 @@ export function useTodoNextUserId() {
   if (!context) {
     throw new Error('Cannot find TodoProvider');
   }
+  return context;
 }
 
 export function useTodoNextTodoId() {
@@ -129,4 +132,5 @@ export function useTodoNextTodoId() {
   if (!context) {
     throw new Error('Cannot find TodoProvider');
   }
+  return context;
 }
