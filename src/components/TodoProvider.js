@@ -73,10 +73,55 @@ const initialState = {
 
 function todoReducer(state, action) {
   switch (action.type) {
+    case 'ISLOGIN_TRUE':
+      return { ...state, isLogin: true };
     case 'ISLOGIN_FALSE':
       return { ...state, isLogin: false };
+    case 'LOGINUSER_SET':
+      return { ...state, loginUser: { ...action.loginUser } };
+    case 'LOGINUSER_MODIFY':
+      return {
+        ...state,
+        loginUser: { ...state.loginUser, [action.key]: action.value },
+      };
+    case 'TODO_REMOVE':
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo.id !== parseInt(action.id)),
+      };
+    case 'TODO_TOGGLE':
+      return {
+        ...state,
+        todos: state.todos.map((todo) =>
+          todo.id === parseInt(action.id)
+            ? { ...todo, done: !todo.done }
+            : todo,
+        ),
+      };
+    case 'TODO_CREATE':
+      return { ...state, todos: [...state.todos, action.todo] };
+    case 'TODO_MODIFY':
+      return {
+        ...state,
+        todos: state.todos.map((todo) =>
+          todo.writer === state.loginUser.name
+            ? { ...todo, writer: action.writer }
+            : todo,
+        ),
+      };
+    case 'USER_ADD':
+      return { ...state, users: [...state.users, action.user] };
+    case 'USER_MODIFY':
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.id === state.loginUser.id
+            ? { ...user, [action.key]: action.value }
+            : user,
+        ),
+      };
     default:
-      return state;
+      throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
 

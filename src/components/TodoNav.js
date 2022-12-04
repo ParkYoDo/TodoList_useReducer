@@ -50,7 +50,7 @@ function TodoNav() {
         <NavLogo>
           <Link to="/">
             <TfiWrite style={{ marginRight: '12px', fontSize: '24px' }} />
-            To Do List :
+            To Do List :)
           </Link>
         </NavLogo>
         <NavMenu>
